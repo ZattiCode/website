@@ -70,9 +70,52 @@
     /* Esconder scrollbar na área do marquee */
     .hide-scrollbar::-webkit-scrollbar { display: none; }
     .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    /* Efeito de desenho da Logo (Splash Screen) */
+    .loader-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .zatti-svg-logo text {
+      fill: transparent;
+      stroke: #fafaf9; /* Cor branca/stone-50 */
+      stroke-width: 1.5px;
+      stroke-dasharray: 40px; /* Tamanho do traço */
+      /* A animação faz o traço andar e depois preenche de branco */
+      animation: 
+        drawLogo 3s linear infinite,
+        fillLogo 1.5s ease-in-out 1.5s forwards; 
+    }
+
+    @keyframes drawLogo {
+      0% { stroke-dashoffset: 0px; }
+      100% { stroke-dashoffset: 400px; /* 10x o valor do dasharray */ }
+    }
+
+    @keyframes fillLogo {
+      0% { fill: transparent; }
+      100% { fill: #fafaf9; stroke-width: 0; } /* Preenche de branco e tira a borda */
+    }
+
   </style>
 </head>
 <body class="font-sans selection:bg-stone-200">
+
+  <div id="splash-screen" class="fixed inset-0 z-[100] bg-stone-900 flex items-center justify-center transition-opacity duration-1000 ease-in-out">
+    <div class="loader-container">
+      
+      <svg class="zatti-svg-logo" xmlns="http://www.w3.org/2000/svg" width="250" height="100" viewBox="0 0 250 100">
+        <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-family="'Playfair Display', serif" font-size="72" font-weight="600" letter-spacing="-1">
+          Zatti
+        </text>
+      </svg>
+      
+      <span class="text-sm font-medium text-stone-400 uppercase tracking-widest mt-2 fade-up delay-300 visible">Ambientes Planejados</span>
+    </div>
+  </div>
 
   <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 bg-white/80 backdrop-blur-md border-b border-stone-200">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -113,30 +156,35 @@
   </nav>
 
   <section id="inicio" class="relative min-h-screen flex items-center pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+    <div class="absolute inset-0 z-0">
+      <img src="/img/bg-hero.jpg" alt="Interior moderno" class="w-full h-full object-cover" />
+      <div class="absolute inset-0 bg-stone-900/50"></div>
+    </div>
+
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
       <div class="lg:w-1/2 lg:pr-16">
         <div class="fade-up">
-          <h1 class="font-serif text-4xl md:text-5xl lg:text-6xl font-semibold leading-tight text-stone-900 mb-6">
-            Você sonha, a gente realiza.       
+          <h1 class="font-serif text-4xl md:text-5xl lg:text-6xl font-semibold leading-tight text-white mb-6">
+            Você sonha,     
+          </h1>
+          <h1 class="font-serif text-4xl md:text-5xl lg:text-6xl font-semibold leading-tight text-white mb-6">
+            a gente realiza.       
           </h1>
         </div>
         <div class="fade-up delay-100">
-          <p class="text-lg text-stone-600 mb-8 max-w-lg leading-relaxed">
+          <p class="text-lg text-stone-200 mb-8 max-w-lg leading-relaxed">
             Unimos design, funcionalidade e qualidade para criar ambientes planejados que refletem seu estilo de vida e personalidade.
           </p>
         </div>
         <div class="fade-up delay-200 flex flex-col sm:flex-row gap-4">
-          <a href="#portfolio" class="bg-stone-900 text-white px-8 py-4 rounded-sm font-medium text-center hover:bg-stone-800 transition-colors">
+          <a href="#portfolio" class="bg-white text-stone-900 px-8 py-4 rounded-sm font-medium text-center hover:bg-stone-100 transition-colors">
             Ver Portfólio
           </a>
-          <a href="#contato" class="border border-stone-300 text-stone-700 px-8 py-4 rounded-sm font-medium text-center hover:bg-stone-100 transition-colors">
+          <a href="#contato" class="border border-white/40 text-white backdrop-blur-sm px-8 py-4 rounded-sm font-medium text-center hover:bg-white/10 transition-colors">
             Solicitar Orçamento
           </a>
         </div>
       </div>
-    </div>
-    <div class="hidden lg:block absolute top-0 right-0 w-1/2 h-full bg-stone-200">
-      <img src="hero-bg.png" alt="Interior moderno" class="w-full h-full object-cover" />
     </div>
   </section>
 
@@ -144,7 +192,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
         <div class="fade-up">
-          <img src="https://picsum.photos/800/1000?random=2" alt="Nossa marcenaria" class="rounded-sm shadow-xl w-full" />
+          <img src="/img/porque-a-zatti.jpg" alt="Nossa marcenaria" class="rounded-sm shadow-xl w-full" />
         </div>
         <div>
           <span class="text-stone-500 font-medium tracking-wider uppercase text-sm mb-3 block">Excelência em cada detalhe</span>
@@ -174,6 +222,19 @@
               <div>
                 <h5 class="font-medium text-stone-900">Atenção aos Detalhes</h5>
                 <p class="text-sm text-stone-500 mt-1">Acabamento minucioso em cada milímetro.</p>
+              </div>
+            </div>
+
+            <div class="fade-up delay-300 flex items-start">
+              <svg class="text-stone-400 mt-1 mr-3 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              
+              <div>
+                <h5 class="font-medium text-stone-900">Clientes Satisfeitos</h5>
+                <p class="text-sm text-stone-500 mt-1 mb-3">Dê uma olhada no que os clientes dizem sobre nossos projetos.</p>
+                
+                <a href="#depoimentos" class="inline-block px-4 py-2 text-sm font-medium rounded-sm transition-colors bg-white text-stone-700 border border-stone-300 hover:bg-stone-100 hover:text-stone-900">
+                  Ver Avaliações
+                </a>
               </div>
             </div>
 
@@ -233,43 +294,43 @@
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="portfolio-grid">
-        <div class="portfolio-item fade-up group relative overflow-hidden rounded-sm bg-stone-200 aspect-[4/3]" data-category="Cozinhas">
-          <img src="https://picsum.photos/800/600?random=11" alt="Cozinha Minimalista" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+        <div class="portfolio-item fade-up group relative overflow-hidden rounded-sm bg-stone-200 aspect-[4/3]" data-category="Corporativo">
+          <img src="/img/loja-de-motos.jpg" alt="Empresa Corporativa" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
           <div class="absolute inset-0 bg-stone-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-            <span class="text-stone-300 text-sm uppercase tracking-wider font-medium">Cozinhas</span>
-            <h3 class="text-white text-xl font-serif font-medium mt-1">Cozinha Minimalista</h3>
+            <span class="text-stone-300 text-sm uppercase tracking-wider font-medium">Corporativo</span>
+            <h3 class="text-white text-xl font-serif font-medium mt-1">Loja de Motos</h3>
           </div>
         </div>
         <div class="portfolio-item fade-up delay-100 group relative overflow-hidden rounded-sm bg-stone-200 aspect-[4/3]" data-category="Salas">
-          <img src="https://picsum.photos/800/600?random=12" alt="Home Theater" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+          <img src="/img/home-theater.jpg" alt="Home Theater" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
           <div class="absolute inset-0 bg-stone-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
             <span class="text-stone-300 text-sm uppercase tracking-wider font-medium">Salas</span>
             <h3 class="text-white text-xl font-serif font-medium mt-1">Home Theater Integrado</h3>
           </div>
         </div>
         <div class="portfolio-item fade-up delay-200 group relative overflow-hidden rounded-sm bg-stone-200 aspect-[4/3]" data-category="Quartos">
-          <img src="https://picsum.photos/800/600?random=13" alt="Suíte Master" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+          <img src="/img/suite-master.jpg" alt="Suíte Master" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
           <div class="absolute inset-0 bg-stone-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
             <span class="text-stone-300 text-sm uppercase tracking-wider font-medium">Quartos</span>
             <h3 class="text-white text-xl font-serif font-medium mt-1">Suíte Master</h3>
           </div>
         </div>
         <div class="portfolio-item fade-up group relative overflow-hidden rounded-sm bg-stone-200 aspect-[4/3]" data-category="Corporativo">
-          <img src="https://picsum.photos/800/600?random=14" alt="Escritório Executivo" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+          <img src="/img/bg-hero.jpg" alt="Escritório Executivo" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
           <div class="absolute inset-0 bg-stone-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
             <span class="text-stone-300 text-sm uppercase tracking-wider font-medium">Corporativo</span>
             <h3 class="text-white text-xl font-serif font-medium mt-1">Escritório Executivo</h3>
           </div>
         </div>
         <div class="portfolio-item fade-up delay-100 group relative overflow-hidden rounded-sm bg-stone-200 aspect-[4/3]" data-category="Cozinhas">
-          <img src="https://picsum.photos/800/600?random=15" alt="Cozinha Gourmet" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+          <img src="/img/cozinha.jpg" alt="Cozinha Gourmet" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
           <div class="absolute inset-0 bg-stone-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
             <span class="text-stone-300 text-sm uppercase tracking-wider font-medium">Cozinhas</span>
             <h3 class="text-white text-xl font-serif font-medium mt-1">Cozinha Gourmet</h3>
           </div>
         </div>
         <div class="portfolio-item fade-up delay-200 group relative overflow-hidden rounded-sm bg-stone-200 aspect-[4/3]" data-category="Quartos">
-          <img src="https://picsum.photos/800/600?random=16" alt="Quarto Infantil" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+          <img src="/img/quarto-infantil.jpg" alt="Quarto Infantil" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
           <div class="absolute inset-0 bg-stone-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
             <span class="text-stone-300 text-sm uppercase tracking-wider font-medium">Quartos</span>
             <h3 class="text-white text-xl font-serif font-medium mt-1">Quarto Infantil</h3>
@@ -277,52 +338,131 @@
         </div>
       </div>
     </div>
+    <div class="mt-16 text-center fade-up delay-300">
+        <a href="https://www.instagram.com/zattiambientesplanejados/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-stone-600 hover:text-stone-900 font-medium transition-colors group">
+          <span class="underline underline-offset-8 decoration-stone-300 group-hover:decoration-stone-900 transition-colors duration-300">
+            Veja mais projetos em nosso Instagram
+          </span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2 transform group-hover:translate-x-1 transition-transform duration-300"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </div>
+
+    </div>
   </section>
 
-  <section id="depoimentos" class="py-20 bg-white overflow-hidden">
+  <section id="depoimentos" class="py-20 bg-stone-100 overflow-hidden">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12 text-center fade-up">
       <h2 class="font-serif text-3xl md:text-4xl font-semibold text-stone-900 mb-4">O que dizem nossos clientes</h2>
+      <p class="text-stone-600">A satisfação de quem já transformou seu lar conosco.</p>
     </div>
     
-    <div class="relative flex w-full overflow-hidden hide-scrollbar py-4">
-      <div class="flex shrink-0 animate-marquee items-center justify-around gap-6 px-3">
-        <div class="w-80 md:w-96 p-6 bg-stone-50 border border-stone-200 rounded-sm shadow-sm">
-          <p class="text-stone-600 mb-6 italic text-sm leading-relaxed">"A Zatti transformou minha cozinha. O projeto 3D já era lindo, mas o resultado final superou todas as expectativas. Acabamento impecável!"</p>
-          <div><p class="font-medium text-stone-900">Mariana Silva</p><p class="text-xs text-stone-500 uppercase tracking-wide">Projeto Residencial</p></div>
-        </div>
-        <div class="w-80 md:w-96 p-6 bg-stone-50 border border-stone-200 rounded-sm shadow-sm">
-          <p class="text-stone-600 mb-6 italic text-sm leading-relaxed">"Profissionalismo do início ao fim. Cumpriram o prazo rigorosamente e a qualidade dos móveis do nosso novo escritório é fantástica."</p>
-          <div><p class="font-medium text-stone-900">Roberto Costa</p><p class="text-xs text-stone-500 uppercase tracking-wide">Escritório Corporativo</p></div>
-        </div>
-        <div class="w-80 md:w-96 p-6 bg-stone-50 border border-stone-200 rounded-sm shadow-sm">
-          <p class="text-stone-600 mb-6 italic text-sm leading-relaxed">"Fizemos o apartamento inteiro com eles. A atenção aos detalhes e as soluções inteligentes de espaço que propuseram fizeram toda a diferença."</p>
-          <div><p class="font-medium text-stone-900">Ana Paula & Carlos</p><p class="text-xs text-stone-500 uppercase tracking-wide">Apartamento Completo</p></div>
-        </div>
-      </div>
-      <div class="flex shrink-0 animate-marquee items-center justify-around gap-6 px-3" aria-hidden="true">
-        <div class="w-80 md:w-96 p-6 bg-stone-50 border border-stone-200 rounded-sm shadow-sm">
-          <p class="text-stone-600 mb-6 italic text-sm leading-relaxed">"A Zatti transformou minha cozinha. O projeto 3D já era lindo, mas o resultado final superou todas as expectativas. Acabamento impecável!"</p>
-          <div><p class="font-medium text-stone-900">Mariana Silva</p><p class="text-xs text-stone-500 uppercase tracking-wide">Projeto Residencial</p></div>
-        </div>
-        <div class="w-80 md:w-96 p-6 bg-stone-50 border border-stone-200 rounded-sm shadow-sm">
-          <p class="text-stone-600 mb-6 italic text-sm leading-relaxed">"Profissionalismo do início ao fim. Cumpriram o prazo rigorosamente e a qualidade dos móveis do nosso novo escritório é fantástica."</p>
-          <div><p class="font-medium text-stone-900">Roberto Costa</p><p class="text-xs text-stone-500 uppercase tracking-wide">Escritório Corporativo</p></div>
-        </div>
-        <div class="w-80 md:w-96 p-6 bg-stone-50 border border-stone-200 rounded-sm shadow-sm">
-          <p class="text-stone-600 mb-6 italic text-sm leading-relaxed">"Fizemos o apartamento inteiro com eles. A atenção aos detalhes e as soluções inteligentes de espaço que propuseram fizeram toda a diferença."</p>
-          <div><p class="font-medium text-stone-900">Ana Paula & Carlos</p><p class="text-xs text-stone-500 uppercase tracking-wide">Apartamento Completo</p></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative fade-up delay-100">
+      <div class="overflow-hidden w-full pb-8 pt-4" id="carousel-viewport">
+        <div id="carousel-track" class="flex gap-6 w-max">
+          
+          <div class="carousel-card flex-shrink-0 w-[85vw] sm:w-[400px] p-8 bg-white border border-stone-200 rounded-xl shadow-md relative group">
+            <svg class="absolute top-6 right-6 w-12 h-12 text-stone-100 transition-colors group-hover:text-stone-200" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+            <div class="relative z-10 flex flex-col justify-between h-full">
+              <div>
+                <div class="flex text-yellow-500 mb-5">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="mr-1"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="mr-1"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="mr-1"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="mr-1"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                </div>
+                <p class="text-stone-600 mb-8 italic leading-relaxed">"Este mês minha cozinha foi montada pela equipe da Zatti e estou me sentindo realizada, cada pedacinho planejado com carinho, montado do jeitinho que eu esperava..."</p>
+              </div>
+              <div class="flex items-center mt-auto">
+                <div class="w-10 h-10 rounded-full bg-stone-900 text-white flex items-center justify-center font-serif font-bold mr-3">SB</div>
+                <div>
+                  <p class="font-medium text-stone-900 text-sm">Silvia Di Buenno</p>
+                  <p class="text-xs text-stone-500 uppercase tracking-wide">Avaliação do Google</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="carousel-card flex-shrink-0 w-[85vw] sm:w-[400px] p-8 bg-white border border-stone-200 rounded-xl shadow-md relative group">
+            <svg class="absolute top-6 right-6 w-12 h-12 text-stone-100 transition-colors group-hover:text-stone-200" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+            <div class="relative z-10 flex flex-col justify-between h-full">
+              <div>
+                <div class="flex text-yellow-500 mb-5">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="mr-1"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="mr-1"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="mr-1"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="mr-1"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                </div>
+                <p class="text-stone-600 mb-8 italic leading-relaxed">"Eu não tenho palavras para expressar minha satisfação com a Zatti ambientes. A Patrícia do início ao fim foi super atenciosa dando atenção a cada detalhe. Qualidade impecável!"</p>
+              </div>
+              <div class="flex items-center mt-auto">
+                <div class="w-10 h-10 rounded-full bg-stone-900 text-white flex items-center justify-center font-serif font-bold mr-3">CS</div>
+                <div>
+                  <p class="font-medium text-stone-900 text-sm">Carol Schmidt</p>
+                  <p class="text-xs text-stone-500 uppercase tracking-wide">Avaliação do Google</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="carousel-card flex-shrink-0 w-[85vw] sm:w-[400px] p-8 bg-white border border-stone-200 rounded-xl shadow-md relative group">
+            <svg class="absolute top-6 right-6 w-12 h-12 text-stone-100 transition-colors group-hover:text-stone-200" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+            <div class="relative z-10 flex flex-col justify-between h-full">
+              <div>
+                <div class="flex text-yellow-500 mb-5">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="mr-1"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="mr-1"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="mr-1"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="mr-1"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                </div>
+                <p class="text-stone-600 mb-8 italic leading-relaxed">"Fui muito bem atendido pelo Lucas, me entregaram os móveis dentro do prazo e a qualidade no geral me agradou muito. Recomendo toda a equipe."</p>
+              </div>
+              <div class="flex items-center mt-auto">
+                <div class="w-10 h-10 rounded-full bg-stone-900 text-white flex items-center justify-center font-serif font-bold mr-3">RA</div>
+                <div>
+                  <p class="font-medium text-stone-900 text-sm">Ricardo Almeida</p>
+                  <p class="text-xs text-stone-500 uppercase tracking-wide">Avaliação do Google</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="carousel-card flex-shrink-0 w-[85vw] sm:w-[400px] p-8 bg-white border border-stone-200 rounded-xl shadow-md relative group">
+            <svg class="absolute top-6 right-6 w-12 h-12 text-stone-100 transition-colors group-hover:text-stone-200" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+            <div class="relative z-10 flex flex-col justify-between h-full">
+              <div>
+                <div class="flex text-yellow-500 mb-5">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="mr-1"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="mr-1"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="mr-1"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="mr-1"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                </div>
+                <p class="text-stone-600 mb-8 italic leading-relaxed">"Foi perfeita! Já fiz dois negócios com a empresa. Cumpre o prazo de entrega. Os montadores são educados e deixam o ambiente limpo. Super recomendo."</p>
+              </div>
+              <div class="flex items-center mt-auto">
+                <div class="w-10 h-10 rounded-full bg-stone-900 text-white flex items-center justify-center font-serif font-bold mr-3">MO</div>
+                <div>
+                  <p class="font-medium text-stone-900 text-sm">Manoel Oliveira</p>
+                  <p class="text-xs text-stone-500 uppercase tracking-wide">Avaliação do Google</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
   </section>
-
-  <footer id="contato" class="bg-stone-950 pt-20 pb-10 border-t border-stone-900 text-stone-400">
+  <footer id="contato" class="bg-stone-900 pt-20 pb-10 border-t border-stone-700 text-stone-400">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-16 mb-16">
         
         <div class="fade-up">
           <h2 class="font-serif text-3xl font-semibold text-white mb-6">Pronto para transformar seu ambiente?</h2>
-          <p class="text-stone-400 mb-8 max-w-md">Visite nosso showroom ou entre em contato para agendar uma consultoria com nossos especialistas.</p>
+          <p class="text-stone-400 mb-8 max-w-md">Visite nosso escritório ou entre em contato para agendar uma consultoria com nossos especialistas.</p>
           
           <div class="space-y-6 mb-8">
             <div class="flex items-center">
@@ -368,7 +508,7 @@
           </div>
         </div>
         
-        <div class="fade-up delay-100 bg-stone-900 p-8 rounded-sm border border-stone-800 flex flex-col justify-between">
+        <div class="fade-up delay-100 bg-stone-900 p-8 rounded-sm border border-stone-700 flex flex-col justify-between">
           <div>
             <h3 class="font-serif text-2xl font-medium text-white mb-6 flex items-center">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" class="mr-3 text-stone-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
@@ -388,9 +528,10 @@
                 <span class="text-stone-400">Domingo</span>
                 <span class="text-stone-500 font-medium italic">Fechado</span>
               </li>
+              <br>
+              <span class="text-stone-500 font-medium italic">Atendimento apenas com horário marcado*</span>
             </ul>
-          </div>
-
+          </div>     
           <div>
             <h4 class="text-sm font-medium text-stone-500 uppercase tracking-wider mb-4">Siga nossas redes</h4>
             <div class="flex space-x-3">
@@ -417,6 +558,20 @@
       </div>
     </div>
   </footer>
+
+  <div class="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2 group">
+    <div class="bg-white text-stone-800 text-sm font-medium py-2 px-4 rounded-xl shadow-lg opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 pointer-events-none border border-stone-100">
+      Fale com um especialista
+    </div>
+    
+    <a href="https://wa.me/5541996452421" target="_blank" rel="noopener noreferrer" class="bg-[#25D366] text-white p-4 rounded-full shadow-xl hover:shadow-2xl hover:scale-110 transition-all duration-300 flex items-center justify-center relative">
+      <span class="absolute inset-0 rounded-full bg-[#25D366] animate-ping opacity-25"></span>
+      
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16" class="relative z-10">
+        <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/>
+      </svg>
+    </a>
+  </div>
 
   <script>
     // 1. Menu Mobile Toggle
@@ -482,6 +637,58 @@
           }
         });
       });
+    });
+
+    // 4. Lógica do Carrossel de Depoimentos (Passa um por vez)
+    const track = document.getElementById('carousel-track');
+    let isMoving = false;
+
+    function moveCarousel() {
+      if (isMoving || !track || track.children.length === 0) return;
+      isMoving = true;
+
+      // Pega o primeiro cartão e a distância que precisamos mover
+      const firstCard = track.children[0];
+      const gap = 24; // O equivalente a gap-6 do Tailwind (1.5rem = 24px)
+      const moveDistance = firstCard.offsetWidth + gap;
+
+      // Aplica a transição e move a trilha para a esquerda
+      track.style.transition = 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+      track.style.transform = `translateX(-${moveDistance}px)`;
+
+      // Quando a transição terminar, reorganiza os elementos silenciosamente
+      setTimeout(() => {
+        // Remove a transição momentaneamente para voltar ao eixo original sem piscar
+        track.style.transition = 'none';
+        
+        // Joga o primeiro cartão lá para o final da fila (cria o loop infinito)
+        track.appendChild(firstCard); 
+        
+        // Reseta a posição da trilha
+        track.style.transform = 'translateX(0)';
+        
+        // Libera para o próximo movimento
+        isMoving = false;
+      }, 600); // 600ms igual ao tempo da transição no CSS
+    }
+
+    // Passa para o próximo cartão a cada 4 segundos
+    setInterval(moveCarousel, 4000);
+
+    // 5. Lógica da Tela de Entrada (Splash Screen)
+    window.addEventListener('load', () => {
+      const splashScreen = document.getElementById('splash-screen');
+      
+      // Deixa a animação rolar por 2.2 segundos
+      setTimeout(() => {
+        // Remove a opacidade para sumir suavemente (fade out)
+        splashScreen.style.opacity = '0';
+        
+        // Remove o elemento do caminho depois que a transição de opacidade terminar
+        setTimeout(() => {
+          splashScreen.style.display = 'none';
+        }, 500); // 1000ms = 1 segundo de transição suave
+      }, 2000); 
     });
   </script>
 </body>
